@@ -1,0 +1,38 @@
+[package]
+name = "browser-wasm-node"
+version = "0.1.0"
+authors = ["nuel77 <emmanuel.thomas237@gmail.com>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = ["console_error_panic_hook"]
+
+[dependencies]
+libp2p = {path = "../../rust-libp2p" , features = ["wasm-bindgen", "mplex", "noise", "identify", "yamux", "ping", "floodsub", "wasm-ext", "wasm-ext-websocket", "gossipsub"]}
+tokio = { version = "1.17.0", features = ["macros", "sync"] }
+wasm-bindgen = "0.2.63"
+wasm-bindgen-futures = { version = "0.4.30"}
+web-sys = { version = "0.3.57", features = ["HtmlFormElement"] }
+js-sys = "0.3.57"
+gloo = { version = "0.8.0", features = ["futures"] }
+futures = "0.3.25"
+# The `console_error_panic_hook` crate provides better debugging of panics by
+# logging them with `console.error`. This is great for development, but requires
+# all the `std::fmt` and `std::panicking` infrastructure, so isn't great for
+# code size when deploying.
+console_error_panic_hook = { version = "0.1.6", optional = true }
+
+# `wee_alloc` is a tiny allocator for wasm that is only ~1K in code size
+# compared to the default allocator's ~10K. It is slower than the default
+# allocator, however.
+wee_alloc = { version = "0.4.5", optional = true }
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3.13"
+
+[profile.release]
+# Tell `rustc` to optimize for small code size.
+opt-level = "s"

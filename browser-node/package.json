@@ -3,8 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chainsafe/libp2p-gossipsub": "^5.2.1",
     "@chainsafe/libp2p-noise": "^10.1.0",
+    "@libp2p/bootstrap": "^5.0.0",
+    "@libp2p/floodsub": "^5.0.0",
+    "@libp2p/kad-dht": "^6.0.1",
+    "@libp2p/mdns": "^5.1.0",
     "@libp2p/mplex": "^7.0.1",
+    "@libp2p/webrtc-star": "^5.0.3",
     "@libp2p/websockets": "^5.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -12,9 +18,11 @@
     "libp2p": "^0.40.0",
     "libp2p-websocket-star": "^0.10.2",
     "libp2p-websockets": "^0.16.2",
+    "multiaddr": "^10.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "uint8arrays": "^4.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
