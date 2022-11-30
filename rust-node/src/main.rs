@@ -1,11 +1,11 @@
+extern crate core;
+
 use libp2p::core::transport::upgrade;
 use libp2p::floodsub::{Floodsub, FloodsubEvent};
 use libp2p::gossipsub::{Gossipsub, GossipsubEvent, Sha256Topic, ValidationMode};
 use libp2p::swarm::SwarmEvent;
 use libp2p::yamux::YamuxConfig;
-use libp2p::{
-    dns, floodsub, gossipsub, identity, noise, tcp, websocket, Multiaddr, PeerId, Swarm, Transport,
-};
+use libp2p::{dns, floodsub, gossipsub, identity, noise, tcp, websocket, Multiaddr, PeerId, Swarm, Transport, development_transport};
 use std::error::Error;
 use async_std::io;
 use std::time::Duration;
@@ -32,16 +32,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
     )
     .boxed();
 
-    let transport = base_transport
-        .upgrade(upgrade::Version::V1Lazy)
-        .authenticate(noise::NoiseConfig::xx(noise_encryption).into_authenticated())
-        .multiplex(YamuxConfig::default())
-        .timeout(Duration::from_secs(10))
-        .boxed();
+    let transport = development_transport(local_key.clone()).await?;
 
     let flood_sub_topic = floodsub::Topic::new("chat");
-    let gossip_sub_topic = Sha256Topic::new("chat-gossip");
-    println!("gossip sub topic {}", gossip_sub_topic);
+    let gossip_sub_topic = gossipsub::IdentTopic::new("gossip");
+    println!("gossip sub topic {}", gossip_sub_topic.hash());
 
     #[derive(libp2p::NetworkBehaviour)]
     #[behaviour(out_event = "OutEvent")]
@@ -108,7 +103,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
         swarm.dial(addr)?;
         println!("Dialed {:?}", to_dial)
     }
-
     let mut stdin = io::BufReader::new(io::stdin()).lines().fuse();
     swarm.listen_on("/ip4/0.0.0.0/tcp/0/ws".parse()?)?;
     loop {

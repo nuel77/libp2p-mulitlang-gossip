@@ -5,18 +5,21 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@chainsafe/libp2p-gossipsub": "^5.2.1",
     "@chainsafe/libp2p-noise": "^10.2.0",
+    "@chainsafe/libp2p-yamux": "^3.0.3",
     "@libp2p/bootstrap": "^5.0.0",
     "@libp2p/floodsub": "^5.0.0",
     "@libp2p/kad-dht": "^6.0.1",
     "@libp2p/mdns": "^5.1.0",
     "@libp2p/mplex": "^7.1.0",
+    "@libp2p/peer-id": "^1.1.16",
     "@libp2p/webrtc-star": "^5.0.3",
     "@libp2p/websockets": "^5.0.0",
     "libp2p": "^0.40.0",
